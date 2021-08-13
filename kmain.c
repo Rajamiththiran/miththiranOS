@@ -1,29 +1,21 @@
 #include "io.h"
 #include "fb.h"
 #include "serial_port.h"
-#include "drivers/gdt.h"
-
-#define POSITION 0
+#include "gdt.h"
 
 void init(){
     init_gdt();
 }
 
-void kmain()
-{
-    init();
+    /* The C function */
+    int sum_of_three(int arg1, int arg2, int arg3)
+    {
+        return arg1 + arg2 + arg3;
+    }
 
-    char str[] = "Hello, Welcome to miththiranOS...!!!";
-    //determining the length of the string
-    unsigned int len = sizeof(str) / sizeof(str[0]);
-    
-    //frame builder writing
-    fb_write(POSITION, str, len);
-    
-    //serial writing
-    char str2[] = "Hello miththiran varathan";
-    serial_write(0x3F8, str2, 21);
-}
+    void run(){
+        char c[] = "Welcome";
+        write(c, 9);
 
-
-
+        serial_write(SERIAL_COM1_BASE, c, 7);
+    }
