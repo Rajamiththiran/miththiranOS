@@ -1,4 +1,4 @@
-    OBJECTS = loader.o kmain.o
+    OBJECTS = loader.o kmain.o io.o gdt_asm.o idt.o interrupt_handler.o
     CC = gcc
     CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
              -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
@@ -11,7 +11,7 @@
     kernel.elf: $(OBJECTS)
 	ld $(LDFLAGS) $(OBJECTS) -o kernel.elf
 
-    os.iso: kernel.elf
+    miththiranOS.iso: kernel.elf
 	cp kernel.elf iso/boot/kernel.elf
 	genisoimage -R                              \
                     -b boot/grub/stage2_eltorito    \
@@ -24,7 +24,7 @@
                     -o miththiranOS.iso                       \
                     iso
 
-    run: miththiranOS.ios
+    run: miththiranOS.iso
 	bochs -f bochsrc.txt -q
 
     %.o: %.c
